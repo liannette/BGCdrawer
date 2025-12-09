@@ -1,4 +1,4 @@
-bgc_id	motif_id	n_matches	threshold	score	tokenised_genes
+bgc_id	motif_id	n_training	score_threshold	score	genes
 BGC0000001	77	236	8.686	8.686	Bac_luciferase,FMN_red
 BGC0000001	148	74	3.68	24.366	2-oxoacid_dh,DUF1100,PP-binding_c59
 BGC0000001	997	198	8.256	8.256	Thioesterase_c1,p450_c5
