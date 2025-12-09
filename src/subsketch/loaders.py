@@ -7,7 +7,7 @@ def _extract_cds_features(bgc_id, bgc_record):
     for f in bgc_record.features:
         if f.type == "CDS":
             orf_num = len(multiple_cds) + 1
-            multiple_cds[f"{bgc_id}_{orf_num}"] = CodingSequence(bgc_id, orf_num, f)
+            multiple_cds[f"{bgc_id}_{orf_num}"] = CodingSequence.from_feature(bgc_id, orf_num, f)
     return multiple_cds
 
 
@@ -23,7 +23,7 @@ def _extract_mibig_organism(bgc_record):
             return f.qualifiers["organism"][0]
 
 
-def load_bgc_data(bgc_gbk_filepath):
+def load_bgc(bgc_gbk_filepath):
     bgc_record = read_bgc_gbk(bgc_gbk_filepath)
     bgc_id = bgc_record.annotations.get("locus", "unknown_bgc_id")
     cds_features = _extract_cds_features(bgc_id, bgc_record)

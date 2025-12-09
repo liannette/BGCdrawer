@@ -10,7 +10,22 @@ from subsketch.config import (
     stripe_thickness,
 )
 
-def _get_gene_coordinates(X, Y, L, l, H, h, strand):
+def _get_gene_coordinates(X, Y, L, l, H, h, strand):  # noqa: E741
+    """
+    Get coordinates for a gene arrow.
+
+    Args:
+        X: x-coordinate of the arrow start (left for +, right for -)
+        Y: y-coordinate of the arrow start (upper side)
+        L: length of the arrow
+        l: length of the arrow head
+        H: height of the arrow
+        h: height of the arrow head
+        strand: strand of the gene ("+" or "-")
+
+    Returns:
+        points: list of [x,y] coordinates for the arrow
+    """
     if strand == "+":
         if L < l:
             # squeeze arrow if length shorter than head length
@@ -47,7 +62,7 @@ def _get_gene_coordinates(X, Y, L, l, H, h, strand):
     return points
 
 
-def _get_arrow_head_location(L, l, strand):
+def _get_arrow_head_location(L, l, strand):  # noqa: E741
     if strand == "+":
         head_end = L
         # no tail
@@ -504,33 +519,6 @@ def draw_subcluster_hit(
         scaling=scaling,
     )
     return svg_text
-
-
-def add_subcluster_title(svg_text, motif_hit):
-    """Wrap SVG content with a title in HTML format.
-
-    Args:
-        svg_text (str): The SVG content as a string.
-        motif_hit (dict): The motif hit information containing details for the title.
-
-    Returns:
-        str: HTML string containing the title and SVG content.
-    """
-    title = f"Subcluster Motif #{motif_hit['motif_id']}"
-    subtitle = f"Threshold: {motif_hit['threshold']}\nScore: {motif_hit['score']}"
-
-    html_content = f"""
-    <div style="margin: 1.5em 0 1em 0;">
-        <h3 style="margin: 0 0 0.3em 0; line-height: 1.2;">
-            {title}
-            <br><small style="font-size: 0.8em; color: #666; font-weight: 400;">
-                {subtitle}
-            </small>
-        </h3>
-    </div>
-    <div>{svg_text}</div>
-    """
-    return html_content
 
 
 def draw_annotated_subcluster(

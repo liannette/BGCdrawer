@@ -1,6 +1,6 @@
 from subsketch.bgc import draw_bgc, draw_subcluster_hit, draw_annotated_subcluster
 from subsketch.motif import plot_subcluster_motif
-from subsketch.loaders import load_bgc, load_mibig_bgc
+from subsketch.loaders import load_bgc
 from subsketch.molecule import draw_compounds, draw_compounds_with_substruct_flexible
 
 
@@ -42,9 +42,7 @@ def _subcluster_title(motif_hit):
 
 
 def generate_html_report_for_bgc(
-    bgc_id: str,
-    bgc_length: int,
-    cds_features: list,
+    bgc_data: dict,
     bgc_detected_motifs: list,
     bgc_domains_hits: dict,
     domain_colors: dict,
@@ -58,11 +56,10 @@ def generate_html_report_for_bgc(
     html_content = _html_head()
 
     # Draw BGC
-    html_content += f"<h1>{bgc_id}</h1>\n"
+    html_content += f"<h1>{bgc_data['id']}</h1>\n"
     if include_bgc_plot:
         bgc_svg = draw_bgc(
-            bgc_length=bgc_length,
-            cds_features=cds_features,
+            bgc_data=bgc_data,
             color_genes=True,
             color_domains=False,
             scaling=scaling,
@@ -79,9 +76,8 @@ def generate_html_report_for_bgc(
         html_content += _subcluster_title(motif_hit)
 
         subcluster_svg = draw_subcluster_hit(
-            bgc_length=bgc_length,
-            cds_features=cds_features,
             motif_hit=motif_hit,
+            bgc_data=bgc_data,
             bgc_domain_hits=bgc_domains_hits,
             domain_colors=domain_colors,
             scaling=scaling,
@@ -145,15 +141,13 @@ def generate_html_for_motif(
     return html_content
 
 
-def generate_html_for_subcluster(subcluster, gbks_dirpath, compounds, scaling=30):
+def generate_html_for_annotated_subcluster(subcluster, bgc_data, compounds, scaling=30):
 
-    subcluster_id = subcluster["subcluster_id"]
+    subcluster_id = subcluster["id"]
     bgc_id = subcluster["bgc_id"]
     substructure_name = subcluster["substructure_name"]
     substructure_smiles = subcluster["substructure_smiles"]
     original_sequence = subcluster.get("orig_seq", None)
-
-    bgc_data = load_mibig_bgc(gbks_dirpath / f"{bgc_id}.gbk")
 
     # Generate HTML content
     html_content = _html_head()

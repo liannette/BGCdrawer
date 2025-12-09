@@ -17,9 +17,7 @@ def read_color_domains_file(domains_color_file=None):
     name followed by a comma-separated RGB value.
 
     Args:
-
-    
-            domains_color_file (str): Path to the domains color file.
+        domains_color_file (str): Path to the domains color file.
 
     Returns:
         dict: A dictionary mapping domain accessions (str) to RGB color values (list of 3 integers).
@@ -33,7 +31,7 @@ def read_color_domains_file(domains_color_file=None):
         Domain3    0,0,255
     """
     if domains_color_file is None:
-        data_dir = Path(files("bgcdrawer").joinpath("data"))
+        data_dir = Path(files("subsketch").joinpath("data"))
         domains_color_file = data_dir.joinpath("domain_colors.txt")
 
     if not Path(domains_color_file).is_file():
@@ -138,7 +136,7 @@ def read_detected_motifs(filename):
             hit = {
                 "motif_id": row["motif_id"],
                 "bgc_id": row["bgc_id"],
-                "n_matches": int(row["n_training"]),
+                "n_training": int(row["n_training"]),
                 "threshold": row["score_threshold"],
                 "score": row["score"],
                 "genes": row["genes"].split(","),
