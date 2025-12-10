@@ -2,6 +2,7 @@
 from subsketch.classes import CodingSequence
 from subsketch.io import read_bgc_gbk
 
+
 def _extract_cds_features(bgc_id, bgc_record):
     multiple_cds = dict()
     for f in bgc_record.features:
@@ -25,7 +26,7 @@ def _extract_mibig_organism(bgc_record):
 
 def load_bgc(bgc_gbk_filepath):
     bgc_record = read_bgc_gbk(bgc_gbk_filepath)
-    bgc_id = bgc_record.annotations.get("locus", "unknown_bgc_id")
+    bgc_id = bgc_gbk_filepath.stem
     cds_features = _extract_cds_features(bgc_id, bgc_record)
     bgc_length = len(bgc_record)
     return {
