@@ -55,8 +55,15 @@ def generate_html_report_for_bgc(
 ):
     html_content = _html_head()
 
-    # Draw BGC
+    # Title
     html_content += f"<h1>{bgc_data['id']}</h1>\n"
+
+    # Draw BGC compounds
+    if include_compound_plots:
+        compounds_svg = draw_compounds(compounds, scaling=1.5)
+        html_content += f"<div>{compounds_svg}</div>"
+
+    # Draw BGC
     if include_bgc_plot:
         bgc_svg = draw_bgc(
             bgc_data=bgc_data,
@@ -65,11 +72,6 @@ def generate_html_report_for_bgc(
             scaling=scaling,
         )
         html_content += f"<div>{bgc_svg}</div>"
-    
-    if include_compound_plots:
-        # Draw BGC compounds
-        compounds_svg = draw_compounds(compounds)
-        html_content += f"<div>{compounds_svg}</div>"
 
     # Draw subcluster hits
     for motif_hit in bgc_detected_motifs:
