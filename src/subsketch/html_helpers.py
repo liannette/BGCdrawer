@@ -138,7 +138,7 @@ def generate_html_for_motif(
                 motif_hit,
             )
 
-        html_content += f"<div class='motif_plot'>{motif_svg}</div>"
+            html_content += f"<div class='motif_plot'>{motif_svg}</div>"
 
     return html_content
 
